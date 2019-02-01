@@ -280,19 +280,21 @@ function reverseInteger(num) {
  *   4916123456789012 => false
  */
 function isCreditCardNumber(ccn) {
-    // var oddSum = 0;
-    // ccn = ccn.toString();
-    // for (let i = 0; i < ccn.length; i++) {
-    //     let num = Number(ccn.charAt(i));
-    //     if(i%2){
-    //         num = num*2;
-    //         oddSum = (num > 9 ? num%10 + 1: num )+ oddSum;
-    //     }else{
-    //         oddSum = num + oddSum;
-    //     }
-    // }
-    // return !((oddSum)%10);
-    throw new Error('Not implemented');
+    var oddSum = 0;
+    ccn = ccn.toString();
+    let flag = false;
+    for (let i = ccn.length - 1; i >= 0; i--) {
+        let num = Number(ccn.charAt(i));
+        if (flag) {
+            num = num * 2;
+            oddSum = (num > 9 ? num % 10 + 1 : num) + oddSum;
+            flag = false;
+        } else {
+            oddSum = num + oddSum;
+            flag = true;
+        }
+    }
+    return !((oddSum) % 10);
 }
 
 
@@ -311,7 +313,12 @@ function isCreditCardNumber(ccn) {
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
 function getDigitalRoot(num) {
-    throw new Error('Not implemented');
+    var sum = 0;
+    while (num !== 0) {
+        sum = sum + num % 10;
+        num = Math.floor(num / 10);
+    }
+    return sum > 9 ? getDigitalRoot(sum) : sum;
 }
 
 
@@ -332,12 +339,22 @@ function getDigitalRoot(num) {
  *   '[[]' => false
  *   ']['  => false
  *   '[[][][[]]]' => true
- *   '[[][]][' => false
+ *   '[[][]][' => fals
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true 
  */
 function isBracketsBalanced(str) {
-    throw new Error('Not implemented');
+    let arr = [];
+    for (let i = 0; i < str.length; i++) {
+        if (/[[{(<]/i.test(str.charAt(i))) {
+            arr.push(str.charAt(i));
+        } else {
+            let top = arr.pop();
+            if ((str.charAt(i) === '}' && top !== '{') || (str.charAt(i) === ']' && top !== '[') || (str.charAt(i) === '>' && top !== '<') || (str.charAt(i) === ')' && top !== '('))
+                return false;
+        }
+    }
+    return arr.length > 0 ? false : true;
 }
 
 
@@ -397,7 +414,12 @@ function timespanToHumanString(startDate, endDate) {
  *    365, 10 => '365'
  */
 function toNaryString(num, n) {
-    throw new Error('Not implemented');
+    let result = '';
+    while (num !== 0) {
+        result += num % n;
+        num = Math.floor(num / n);
+    }
+    return result.split('').reverse().join('');
 }
 
 
