@@ -130,7 +130,8 @@ function isTriangle(a, b, c) {
  *  
  */
 function doRectanglesOverlap(rect1, rect2) {
-    throw new Error('Not implemented');
+    return ((rect1.left + rect1.width > rect2.left) && (rect1.top + rect1.height > rect2.top)) || ((rect2.left + rect2.width < rect1.left) && (rect2.top + rect2.height < rect1.top)) ? true : false;
+
 }
 
 
@@ -344,17 +345,20 @@ function getDigitalRoot(num) {
  *   '{[(<{[]}>)]}' = true 
  */
 function isBracketsBalanced(str) {
-    let arr = [];
+    let arr = [], result = true;
     for (let i = 0; i < str.length; i++) {
         if (/[[{(<]/i.test(str.charAt(i))) {
             arr.push(str.charAt(i));
         } else {
             let top = arr.pop();
-            if ((str.charAt(i) === '}' && top !== '{') || (str.charAt(i) === ']' && top !== '[') || (str.charAt(i) === '>' && top !== '<') || (str.charAt(i) === ')' && top !== '('))
-                return false;
+            if ((str.charAt(i) === '}' && top !== '{') || (str.charAt(i) === ']' && top !== '[') || (str.charAt(i) === '>' && top !== '<') || (str.charAt(i) === ')' && top !== '(')) {
+                result = false;
+                break;
+            }
         }
     }
-    return arr.length > 0 ? false : true;
+    result = (arr.length === 0) && result ? true : false;
+    return result;
 }
 
 
@@ -390,8 +394,41 @@ function isBracketsBalanced(str) {
  *
  */
 function timespanToHumanString(startDate, endDate) {
-    throw new Error('Not implemented');
+    var millSec = new Date(endDate - startDate);
+    var sec = millSec / 1000;
+    var min = sec / 60;
+    var hrs = min / 60;
+    var days = hrs / 24;
+    var result;
+    function round(num) {
+        return num - Math.floor(num) > 0.5 ? Math.ceil(num) : Math.floor(num);
+    }
+    if (sec <= 45) {
+        result = "a few seconds ago";
+    } else if (sec <= 90) {
+        result = "a minute ago";
+    } else if (min <= 45) {
+        result = round(min) + " minutes ago";
+    } else if (min <= 90) {
+        result = "an hour ago";
+    } else if (hrs <= 22) {
+        result = round(hrs) + " hours ago";
+    } else if (hrs <= 36) {
+        result = "a day ago";
+    } else if (days <= 25) {
+        result = round(days) + " days ago";
+    } else if (days <= 45) {
+        result = "a month ago";
+    } else if (days <= 345) {
+        result = round(days / 30) + " months ago";
+    } else if (days <= 545) {
+        result = "a year ago";
+    } else {
+        result = round(days / 365) + " years ago";
+    }
+    return result;
 }
+
 
 
 /**
@@ -436,9 +473,21 @@ function toNaryString(num, n) {
  *   ['/web/favicon.ico', '/web-scripts/dump', '/webalizer/logs'] => '/'
  */
 function getCommonDirectoryPath(pathes) {
-    throw new Error('Not implemented');
+    let temp = pathes[0];
+    let commonPath = '';
+    for (let i = 1; i < pathes.length; i++) {
+        for (let j = 0; j <= temp.lastIndexOf('/'); j++) {
+            if (temp[j] === pathes[i][j]) {
+                commonPath += (temp[j]);
+            } else {
+                temp = commonPath;
+                commonPath = '';
+                break;
+            }
+        }
+    }
+    return commonPath;
 }
-
 
 /**
  * Returns the product of two specified matrixes.
@@ -459,7 +508,20 @@ function getCommonDirectoryPath(pathes) {
  *
  */
 function getMatrixProduct(m1, m2) {
-    throw new Error('Not implemented');
+    const matrixProduct = [];
+    let sum = 0;
+    for (let i = 0; i < m1.length; i++) {
+        const temp = [];
+        for (let j = 0; j < m2[0].length; j++) {
+            for (let k = 0; k < m1[0].length; k++) {
+                sum += m1[i][k] * m2[k][j];
+            }
+            temp[j] = sum;
+            sum = 0;
+        }
+        matrixProduct.push(temp);
+    }
+    return matrixProduct;
 }
 
 

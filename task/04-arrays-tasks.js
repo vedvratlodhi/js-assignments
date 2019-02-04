@@ -38,7 +38,8 @@ function findElement(arr, value) {
  *    5 => [ 1, 3, 5, 7, 9 ]
  */
 function generateOdds(len) {
-    throw new Error('Not implemented');
+    let firstVal = -1;
+    return Array.from({ length: len }, (elem, ind) => { return firstVal += 2; });
 }
 
 
@@ -272,13 +273,7 @@ function getSecondItems(arr) {
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
 function propagateItemsByPositionIndex(arr) {
-    // arr.every(function (x,index){
-    //         return index>0?arr.splice(index,0,Array(index).fill(x)):x;
-    //     }
-    // );
-    // return arr;
-    throw new Error('Not implemented');
-
+    return arr.reduce((result, current, index) => result.concat(Array(index + 1).fill(current)), []);
 }
 
 
@@ -487,7 +482,7 @@ function getIntervalArray(start, end) {
  *   [ 1, 1, 2, 2, 3, 3, 4, 4] => [ 1, 2, 3, 4]
  */
 function distinct(arr) {
-    throw new Error('Not implemented');
+    return arr.reduce((result, current) => result.indexOf(current) === -1 ? result.concat(current) : result, [])
 }
 
 /**
@@ -523,7 +518,7 @@ function distinct(arr) {
 function group(array, keySelector, valueSelector) {
     var map = new Map();
     array.map((x) =>
-        !map.has(keySelector(x)) ? map.set(keySelector(x), [valueSelector(x)]) : map.set(keySelector(x), map.get(keySelector(x)).concat([valueSelector(x)]))
+        map.has(keySelector(x)) ? map.set(keySelector(x), map.get(keySelector(x)).concat([valueSelector(x)])) : map.set(keySelector(x), [valueSelector(x)])
     )
     return map;
 }
@@ -541,9 +536,8 @@ function group(array, keySelector, valueSelector) {
  *   ['one','two','three'], x=>x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
 function selectMany(arr, childrenSelector) {
-    throw new Error('Not implemented');
+    return arr.reduce((result, current) => result.concat(childrenSelector(current)), []);
 }
-
 
 /**
  * Returns an element from the multidimentional array by the specified indexes.
@@ -558,7 +552,7 @@ function selectMany(arr, childrenSelector) {
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
 function getElementByIndexes(arr, indexes) {
-  return indexes.reduce((arr, val) => arr[val] ,arr);
+    return indexes.reduce((arr, val) => arr[val], arr);
 }
 
 
@@ -581,14 +575,13 @@ function getElementByIndexes(arr, indexes) {
  * 
  */
 function swapHeadAndTail(arr) {
-    // var end = arr.splice(0,0,(arr.length/2)-1);
-    // var start = arr.length%2==0 ? arr.splice((arr.length/2)) :arr.splice((arr.length/2 + 1)) ;
-    // var mid =   arr.length%2==0 ? [] : arr.splice((arr.length/2),0);
-    // return start.concat(mid).concat(end);
-    throw new Error('Not implemented');
+    var len = arr.length;
+    var start = arr.length % 2 === 0 ? arr.slice(len / 2) : arr.slice(len / 2 + 1);
+    var mid = arr.length % 2 == 0 ? [] : arr.slice((len / 2), len / 2 + 1);
+    var end = arr.slice(0, len / 2);
+    return start.concat(mid).concat(end);
 
 }
-
 
 module.exports = {
     findElement: findElement,

@@ -33,32 +33,23 @@
  *
  */
 function* get99BottlesOfBeer() {
-	var i=99;
-	var flag = true;
-    while(i!==-1)
-	{
-		if(i===0){
-			yield "No more bottles of beer on the wall, no more bottles of beer.";
-			yield "Go to the store and buy some more, 99 bottles of beer on the wall.";
-			--i;
-		}else if(i===1){
-			yield i + " bottle of beer on the wall, "+ i-- +" bottle of beer.";
-			yield "Take one down and pass it around, no more bottles of beer on the wall.";
-		 
-		
-		}else{
-			//yield i + " bottles of beer on the wall, "+i+" bottles of beer.Take one down and pass it around, "+ --i +" bottles of beer on the wall";
-			
-			yield i + " bottles of beer on the wall, "+i+" bottles of beer.";
-			if(--i===1)
-			{
-			yield "Take one down and pass it around, "+ i+" bottle of beer on the wall.";
-			}else{
-				yield "Take one down and pass it around, "+ i+" bottles of beer on the wall.";
-			}
-			}
-		
-	}
+    var i = 99;
+    var flag = true;
+    while (i !== 0) {
+        if (i === 1) {
+            yield `${i} bottle of beer on the wall, ${i--} bottle of beer.`;
+            yield 'Take one down and pass it around, no more bottles of beer on the wall.';
+        } else {
+            yield `${i} bottles of beer on the wall, ${i} bottles of beer.`;
+            if (--i === 1) {
+                yield `Take one down and pass it around, ${i} bottle of beer on the wall.`;
+            } else {
+                yield `Take one down and pass it around, ${i} bottles of beer on the wall.`;
+            }
+        }
+    }
+    yield "No more bottles of beer on the wall, no more bottles of beer.";
+    yield "Go to the store and buy some more, 99 bottles of beer on the wall.";
 }
 
 
@@ -72,13 +63,13 @@ function* get99BottlesOfBeer() {
  *
  */
 function* getFibonacciSequence() {
-    var i=0,j=1;
-	while(1){
-		yield i;
-		let sum = i + j;
-		i=j
-		j=sum;
-	}
+    var i = 0, j = 1;
+    while (1) {
+        yield i;
+        let sum = i + j;
+        i = j
+        j = sum;
+    }
 }
 
 
@@ -112,16 +103,19 @@ function* getFibonacciSequence() {
  *  depthTraversalTree(node1) => node1, node2, node3, node4, node5, node6, node7, node8
  *
  */
+
 function* depthTraversalTree(root) {
-	if(root)
-	{
-    var child = root.children;
-	yield root;
-	for(let i=0;i<child.length;i++){
-	depthTraversalTree(child[i]);
-	}
-	}
+      var nodes = [root];
+    while(nodes.length) {
+        var current = nodes.pop();
+        yield current;
+        if(current.children){
+            nodes = nodes.concat(current.children.reverse());
+        }
+    }
 }
+
+
 
 
 /**
@@ -145,7 +139,18 @@ function* depthTraversalTree(root) {
  *           8
  *
  */
+
 function* breadthTraversalTree(root) {
+    // var nodes = [root];
+    // console.log(root.children.length)
+    // while(nodes.length) {
+    //     console.log(nodes.length)
+    //     var current = nodes.shift();
+    //     yield current;
+    //     if(current.children){
+    //         nodes = nodes.concat(current.children);
+    //     }
+    // }
     throw new Error('Not implemented');
 }
 
