@@ -69,6 +69,7 @@ function doubleArray(arr) {
  *    [ 0, 1, 2, 3, 4, 5 ] => [ 1, 2, 3, 4, 5 ]
  *    [-1, 2, -5, -4, 0] => [ 2 ]
  *    [] => [] 
+ * 
  */
 function getArrayOfPositives(arr) {
     return arr.filter((x) => x > 0);
