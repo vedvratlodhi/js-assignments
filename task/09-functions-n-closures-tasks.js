@@ -116,7 +116,7 @@ function retry(func, attempts) {
         while (attempts-- > 0) {
             try {
                 return func();
-            } catch{
+            } catch(e){
             }
         }
     }
