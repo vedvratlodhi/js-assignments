@@ -105,11 +105,11 @@ function* getFibonacciSequence() {
  */
 
 function* depthTraversalTree(root) {
-      var nodes = [root];
-    while(nodes.length) {
+    var nodes = [root];
+    while (nodes.length) {
         var current = nodes.pop();
         yield current;
-        if(current.children){
+        if (current.children) {
             nodes = nodes.concat(current.children.reverse());
         }
     }
@@ -141,17 +141,14 @@ function* depthTraversalTree(root) {
  */
 
 function* breadthTraversalTree(root) {
-    // var nodes = [root];
-    // console.log(root.children.length)
-    // while(nodes.length) {
-    //     console.log(nodes.length)
-    //     var current = nodes.shift();
-    //     yield current;
-    //     if(current.children){
-    //         nodes = nodes.concat(current.children);
-    //     }
-    // }
-    throw new Error('Not implemented');
+    let nodes = [root];
+    while (nodes.length) {
+        let node = nodes.pop();
+        yield node;
+        if (node.children) {
+            nodes = node.children.reverse().concat(nodes);
+        }
+    }
 }
 
 
@@ -169,7 +166,27 @@ function* breadthTraversalTree(root) {
  *   [ 1, 3, 5, ... ], [ -1 ] => [ -1, 1, 3, 5, ...]
  */
 function* mergeSortedSequences(source1, source2) {
-    throw new Error('Not implemented');
+    let s1 = source1();
+    let s2 = source2();
+    var node1 = s1.next();
+    var node2 = s2.next();
+    while (!(node1.done || node2.done)) {
+        if (node1.value < node2.value) {
+            yield node1.value;
+            node1 = s1.next();
+        } else {
+            yield node2.value;
+            node2 = s2.next();
+        }
+    }
+    while (!node1.done) {
+        yield node1.value;
+        node1 = s1.next();
+    }
+    while (!node2.done) {
+        yield node2.value;
+        node2 = s2.next();
+    }
 }
 
 
